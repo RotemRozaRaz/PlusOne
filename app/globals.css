@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-blush: #F5E1DA;
+    --color-gold: #D4AF37;
+    --color-ivory: #FAF7F2;
+    --color-slate: #4A4A4A;
+    --radius-card: 1.25rem;
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior: none;
+  }
+
+  body {
+    font-family: var(--font-body), system-ui, sans-serif;
+    background-color: #FAF7F2;
+    min-height: 100dvh;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+  }
+}
+
+@layer utilities {
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 16px);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+  .font-display {
+    font-family: var(--font-display), Georgia, serif;
+  }
+}
