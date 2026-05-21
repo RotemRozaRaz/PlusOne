@@ -84,6 +84,24 @@ CREATE POLICY "Anyone can read likes"      ON likes FOR SELECT USING (true);
 CREATE POLICY "Public read matches"        ON matches FOR SELECT USING (true);
 CREATE POLICY "No direct match insert"     ON matches FOR INSERT WITH CHECK (false);
 
+-- ─── Match Helpers ───────────────────────────────────────────────────────────
+
+-- Returns matched user profiles for a given user, bypassing is_active RLS
+CREATE OR REPLACE FUNCTION get_my_matches(p_user_id UUID)
+RETURNS SETOF users
+LANGUAGE sql
+SECURITY DEFINER
+AS $$
+  SELECT u.*
+  FROM matches m
+  JOIN users u ON u.id = CASE
+    WHEN m.user1_id = p_user_id THEN m.user2_id
+    ELSE m.user1_id
+  END
+  WHERE m.user1_id = p_user_id OR m.user2_id = p_user_id
+  ORDER BY m.created_at DESC;
+$$;
+
 -- ─── Realtime ─────────────────────────────────────────────────────────────────
 -- Enable in Supabase Dashboard → Database → Replication → matches table
 -- Or run:

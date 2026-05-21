@@ -12,7 +12,7 @@ import LogoutButton from '@/components/ui/LogoutButton'
 export default function MatchesPage() {
   const router = useRouter()
   const { profile, loading: profileLoading } = useProfile()
-  const { matches, loading: matchesLoading } = useMatches(profile?.id)
+  const { matches, loading: matchesLoading, error: matchesError } = useMatches(profile?.id)
 
   useEffect(() => {
     if (!profileLoading && !profile) router.replace('/onboard')
@@ -35,6 +35,9 @@ export default function MatchesPage() {
       </header>
 
       <main className="flex-1 overflow-y-auto">
+        {matchesError && (
+          <p className="text-red-400 text-sm text-center px-8 pt-8">{matchesError}</p>
+        )}
         {loading ? (
           <div className="flex items-center justify-center py-24">
             <Spinner />
