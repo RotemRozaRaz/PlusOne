@@ -34,7 +34,6 @@ export default function PhotoStep({ onPhotoSelected, onSubmit, isSubmitting }: P
         ref={inputRef}
         type="file"
         accept="image/*"
-        capture="user"
         className="hidden"
         onChange={handleFile}
       />

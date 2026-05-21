@@ -9,7 +9,10 @@ export function useMatches(currentUserId: string | undefined) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!currentUserId) return
+    if (!currentUserId) {
+      setLoading(false)
+      return
+    }
 
     async function load() {
       const supabase = createClient()

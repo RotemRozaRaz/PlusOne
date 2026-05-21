@@ -91,7 +91,15 @@ const SwipeCard = forwardRef<SwipeCardRef, Props>(
               {profile.name}
             </h2>
             {profile.instagram && (
-              <p className="text-white/70 text-sm mt-1">@{profile.instagram}</p>
+              <a
+                href={`https://instagram.com/${profile.instagram}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                className="text-white/70 text-sm mt-1 underline-offset-2 hover:underline block"
+              >
+                @{profile.instagram}
+              </a>
             )}
           </div>
 
