@@ -5,13 +5,21 @@ import type { User } from '@/types'
 export const revalidate = 0
 
 export default async function AdminPage() {
-  const supabase = createAdminClient()
-  const { data } = await supabase
-    .from('users')
-    .select('*')
-    .order('created_at', { ascending: false })
+  let profiles: User[] = []
+  let fetchError: string | null = null
 
-  const profiles = (data ?? []) as User[]
+  try {
+    const supabase = createAdminClient()
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .order('created_at', { ascending: false })
+
+    if (error) fetchError = error.message
+    else profiles = (data ?? []) as User[]
+  } catch (e) {
+    fetchError = e instanceof Error ? e.message : String(e)
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -23,6 +31,10 @@ export default async function AdminPage() {
           </p>
         </div>
       </div>
+
+      {fetchError && (
+        <p className="text-red-400 text-sm mb-4 font-body">Error: {fetchError}</p>
+      )}
 
       <div className="bg-white rounded-card shadow-card overflow-hidden">
         <ProfileTable initialProfiles={profiles} />
