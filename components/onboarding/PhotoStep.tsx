@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import Spinner from '@/components/ui/Spinner'
@@ -46,7 +47,7 @@ export default function PhotoStep({ onPhotoSelected, onSubmit, isSubmitting }: P
             animate={{ opacity: 1, scale: 1 }}
             className="relative aspect-square rounded-card overflow-hidden shadow-card"
           >
-            <img src={preview} alt="Preview" className="w-full h-full object-cover" />
+            <Image src={preview} alt="Preview" fill unoptimized className="object-cover" />
             <button
               type="button"
               onClick={() => { setPreview(null); if (inputRef.current) inputRef.current.value = '' }}

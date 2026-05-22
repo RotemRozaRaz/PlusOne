@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { forwardRef, useImperativeHandle } from 'react'
 import {
   motion,
@@ -77,10 +78,11 @@ const SwipeCard = forwardRef<SwipeCardRef, Props>(
         onDragEnd={isTop ? handleDragEnd : undefined}
       >
         <div className="relative w-full h-full rounded-card overflow-hidden shadow-card-lg select-none">
-          <img
+          <Image
             src={profile.photo_url}
             alt={profile.name}
-            className="w-full h-full object-cover pointer-events-none"
+            fill
+            className="object-cover pointer-events-none"
             draggable={false}
           />
 

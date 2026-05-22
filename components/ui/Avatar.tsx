@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { cn } from '@/lib/cn'
 
 interface Props {
@@ -21,7 +22,7 @@ export default function Avatar({ src, name, size = 48, className }: Props) {
       style={{ width: size, height: size, minWidth: size }}
     >
       {src ? (
-        <img src={src} alt={name} className="w-full h-full object-cover" />
+        <Image src={src} alt={name} fill className="object-cover" />
       ) : (
         <span className="font-display text-slate-600 font-semibold" style={{ fontSize: size * 0.35 }}>
           {initials}

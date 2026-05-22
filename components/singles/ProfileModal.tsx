@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { createClient } from '@/lib/supabase/client'
@@ -65,10 +66,11 @@ export default function ProfileModal({ profile, onClose }: Props) {
         onClick={e => e.stopPropagation()}
       >
         <div className="relative" style={{ aspectRatio: '3/4' }}>
-          <img
+          <Image
             src={profile.photo_url}
             alt={profile.name}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 

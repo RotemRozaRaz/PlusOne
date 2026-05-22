@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import type { User } from '@/types'
@@ -49,10 +50,11 @@ export default function MatchOverlay({ currentUser, matchedUser, onDismiss }: Pr
           transition={{ delay: 0.25, type: 'spring', stiffness: 220 }}
           className="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-card-lg"
         >
-          <img
+          <Image
             src={currentUser.photo_url}
             alt={currentUser.name}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
         </motion.div>
 
@@ -71,10 +73,11 @@ export default function MatchOverlay({ currentUser, matchedUser, onDismiss }: Pr
           transition={{ delay: 0.25, type: 'spring', stiffness: 220 }}
           className="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-card-lg"
         >
-          <img
+          <Image
             src={matchedUser.photo_url}
             alt={matchedUser.name}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
         </motion.div>
       </div>

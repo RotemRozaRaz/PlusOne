@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import type { User } from '@/types'
 
@@ -21,10 +22,11 @@ export default function ProfileCard({ profile, onClick, index }: Props) {
       className="w-full text-left rounded-[20px] overflow-hidden shadow-card relative group"
       style={{ aspectRatio: tall ? '3/4' : '4/5' }}
     >
-      <img
+      <Image
         src={profile.photo_url}
         alt={profile.name}
-        className="w-full h-full object-cover"
+        fill
+        className="object-cover"
         draggable={false}
       />
 
