@@ -20,6 +20,7 @@ export default function ProfileModal({ profile, onClose }: Props) {
 
   async function handleLike() {
     if (!currentUser || likeState !== 'idle') return
+    if (currentUser.id === profile.id) return
     setLikeState('loading')
 
     const supabase = createClient()

@@ -49,6 +49,10 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
+  IF p_liker = p_liked THEN
+    RETURN;
+  END IF;
+
   INSERT INTO likes (liker_id, liked_id)
   VALUES (p_liker, p_liked)
   ON CONFLICT DO NOTHING;
