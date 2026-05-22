@@ -13,12 +13,15 @@ export function useSwipeQueue(currentUserId: string | undefined) {
     async function load() {
       const supabase = createClient()
 
-      const { data: likes } = await supabase
-        .from('likes')
-        .select('liked_id')
-        .eq('liker_id', currentUserId)
+      const [{ data: likes }, { data: dismissals }] = await Promise.all([
+        supabase.from('likes').select('liked_id').eq('liker_id', currentUserId),
+        supabase.from('dismissed').select('dismissed_id').eq('dismisser_id', currentUserId),
+      ])
 
-      const alreadyLiked = new Set((likes ?? []).map((l: { liked_id: string }) => l.liked_id))
+      const alreadySeen = new Set([
+        ...(likes ?? []).map((l: { liked_id: string }) => l.liked_id),
+        ...(dismissals ?? []).map((d: { dismissed_id: string }) => d.dismissed_id),
+      ])
 
       const { data: profiles } = await supabase
         .from('users')
@@ -28,7 +31,7 @@ export function useSwipeQueue(currentUserId: string | undefined) {
         .order('created_at', { ascending: true })
 
       if (profiles) {
-        setQueue(profiles.filter((p: User) => !alreadyLiked.has(p.id)))
+        setQueue(profiles.filter((p: User) => !alreadySeen.has(p.id)))
       }
     }
 

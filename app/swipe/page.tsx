@@ -36,9 +36,11 @@ export default function SwipePage() {
 
   function handleSwipeEnd(direction: 'left' | 'right', profileId: string) {
     markSeen(profileId)
+    const supabase = createClient()
     if (direction === 'right' && profile) {
-      const supabase = createClient()
       supabase.rpc('try_create_match', { p_liker: profile.id, p_liked: profileId })
+    } else if (direction === 'left' && profile) {
+      supabase.from('dismissed').insert({ dismisser_id: profile.id, dismissed_id: profileId })
     }
   }
 

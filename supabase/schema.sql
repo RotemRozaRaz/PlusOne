@@ -28,6 +28,17 @@ CREATE TABLE likes (
 CREATE INDEX idx_likes_liker_id ON likes(liker_id);
 CREATE INDEX idx_likes_liked_id ON likes(liked_id);
 
+CREATE TABLE dismissed (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  dismisser_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  dismissed_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
+  CONSTRAINT dismissed_no_self CHECK (dismisser_id <> dismissed_id),
+  CONSTRAINT dismissed_unique  UNIQUE (dismisser_id, dismissed_id)
+);
+
+CREATE INDEX idx_dismissed_dismisser ON dismissed(dismisser_id);
+
 CREATE TABLE matches (
   id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user1_id   UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -72,6 +83,7 @@ $$;
 
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE likes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE dismissed ENABLE ROW LEVEL SECURITY;
 ALTER TABLE matches ENABLE ROW LEVEL SECURITY;
 
 -- Users: anyone can read active profiles, anyone can insert
@@ -83,6 +95,10 @@ CREATE POLICY "Anyone can delete user"     ON users FOR DELETE USING (true);
 -- Likes: insert allowed; reads allowed (needed to build the swipe queue client-side)
 CREATE POLICY "Anyone can insert like"     ON likes FOR INSERT WITH CHECK (true);
 CREATE POLICY "Anyone can read likes"      ON likes FOR SELECT USING (true);
+
+-- Dismissed: insert and read allowed (needed to exclude left-swipes from the swipe queue)
+CREATE POLICY "Anyone can insert dismissed" ON dismissed FOR INSERT WITH CHECK (true);
+CREATE POLICY "Anyone can read dismissed"   ON dismissed FOR SELECT USING (true);
 
 -- Matches: public read, no direct client insert (only via stored proc)
 CREATE POLICY "Public read matches"        ON matches FOR SELECT USING (true);
