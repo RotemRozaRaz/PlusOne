@@ -37,6 +37,20 @@ export default function OnboardingForm() {
       const supabase = createClient()
       const userId = crypto.randomUUID()
 
+      if (instagram.trim()) {
+        const { data: existing } = await supabase
+          .from('users')
+          .select('id')
+          .eq('instagram', instagram.trim().toLowerCase())
+          .maybeSingle()
+
+        if (existing) {
+          setError('This Instagram handle is already registered.')
+          setIsSubmitting(false)
+          return
+        }
+      }
+
       const compressed = await compressPhoto(photoFile)
       const fileName = `${userId}.jpg`
 
@@ -54,7 +68,7 @@ export default function OnboardingForm() {
         id: userId,
         device_id: deviceId,
         name: name.trim(),
-        instagram: instagram.trim() || null,
+        instagram: instagram.trim().toLowerCase() || null,
         photo_url: publicUrl,
       })
 

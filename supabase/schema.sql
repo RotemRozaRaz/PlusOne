@@ -7,7 +7,7 @@ CREATE TABLE users (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   device_id     TEXT NOT NULL UNIQUE,
   name          TEXT NOT NULL,
-  instagram     TEXT,
+  instagram     TEXT UNIQUE,
   photo_url     TEXT NOT NULL,
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
   is_active     BOOLEAN NOT NULL DEFAULT true
