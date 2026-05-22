@@ -35,13 +35,12 @@ export default function MatchesPage() {
       </header>
 
       <main className="flex-1 overflow-y-auto">
-        {matchesError && (
-          <p className="text-red-400 text-sm text-center px-8 pt-8">{matchesError}</p>
-        )}
         {loading ? (
           <div className="flex items-center justify-center py-24">
             <Spinner />
           </div>
+        ) : matchesError ? (
+          <p className="text-red-400 text-sm text-center px-8 pt-8">{matchesError}</p>
         ) : matches.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 px-8 text-center">
             <span className="text-5xl mb-4">💌</span>

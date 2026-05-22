@@ -9,11 +9,15 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null)
   const submitted = body?.password
 
-  if (!submitted || typeof submitted !== 'string') {
+  if (submitted == null || typeof submitted !== 'string') {
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
   }
 
   const adminPassword = process.env.ADMIN_PASSWORD ?? ''
+
+  if (!adminPassword) {
+    return NextResponse.json({ error: 'Invalid password' }, { status: 401 })
+  }
   const submittedBuf = Buffer.from(submitted)
   const expectedBuf = Buffer.from(adminPassword)
 

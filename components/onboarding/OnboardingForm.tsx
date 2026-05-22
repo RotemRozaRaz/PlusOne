@@ -28,7 +28,7 @@ export default function OnboardingForm() {
   const [error, setError] = useState<string | null>(null)
 
   async function handleSubmit() {
-    if (!photoFile) return
+    if (!photoFile || isSubmitting) return
     setIsSubmitting(true)
     setError(null)
 
@@ -73,7 +73,7 @@ export default function OnboardingForm() {
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-10">
         <div className="mb-10 text-center">
           <h1 className="font-display text-5xl text-slate-800">Plus One</h1>
-          <p className="text-slate-400 mt-1 text-sm">Find your match at the wedding</p>
+          <p className="text-slate-600 mt-1 text-base font-medium">Rotem &amp; Itay's Wedding</p>
         </div>
 
         <div className="w-full max-w-sm">

@@ -5,7 +5,11 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const { is_active } = await request.json()
+  const body = await request.json().catch(() => null)
+  if (typeof body?.is_active !== 'boolean') {
+    return NextResponse.json({ error: 'is_active must be a boolean' }, { status: 400 })
+  }
+  const { is_active } = body
   const supabase = createAdminClient()
 
   const { error } = await supabase

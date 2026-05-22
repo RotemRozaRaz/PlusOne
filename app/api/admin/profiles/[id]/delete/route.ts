@@ -6,10 +6,17 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   const supabase = createAdminClient()
-  const { error } = await supabase.from('users').delete().eq('id', params.id)
+  const { error, count } = await supabase
+    .from('users')
+    .delete({ count: 'exact' })
+    .eq('id', params.id)
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  if (count === 0) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 })
   }
 
   return NextResponse.json({ success: true })
