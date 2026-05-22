@@ -9,7 +9,7 @@ QRCode.toFile(OUTPUT, URL, {
   margin: 2,
   color: {
     dark: '#2A2A2A',
-    light: '#FAF7F2',
+    light: '#FAF7F200',
   },
 }, (err) => {
   if (err) throw err
