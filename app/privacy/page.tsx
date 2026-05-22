@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="font-display text-2xl text-slate-800 mt-8 mb-3">1. Introduction</h2>
             <p>
-              Welcome to Plus One ("we", "us", "our" or "Company"). We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and mobile application.
+              Welcome to Plus One (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo; or &ldquo;Company&rdquo;). We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and mobile application.
             </p>
           </section>
 
@@ -51,7 +51,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="font-display text-2xl text-slate-800 mt-8 mb-3">4. Cookies and Tracking</h2>
             <p>
-              We use cookies to remember your preferences and improve your experience on our platform. When you click "Accept" on our cookies banner, you consent to the use of cookies as described in this policy.
+              We use cookies to remember your preferences and improve your experience on our platform. When you click &ldquo;Accept&rdquo; on our cookies banner, you consent to the use of cookies as described in this policy.
             </p>
             <p>
               You can control cookies through your browser settings. However, disabling cookies may impact the functionality of our service.
@@ -85,7 +85,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="font-display text-2xl text-slate-800 mt-8 mb-3">8. Children's Privacy</h2>
+            <h2 className="font-display text-2xl text-slate-800 mt-8 mb-3">8. Children&apos;s Privacy</h2>
             <p>
               Plus One is not intended for individuals under the age of 18. We do not knowingly collect personal information from children. If we become aware that a child has provided us with personal information, we will delete such information.
             </p>

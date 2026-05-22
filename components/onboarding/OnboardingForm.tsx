@@ -73,7 +73,7 @@ export default function OnboardingForm() {
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-10">
         <div className="mb-10 text-center">
           <h1 className="font-display text-5xl text-slate-800">Plus One</h1>
-          <p className="text-slate-500 mt-1 text-sm">Rotem's &amp; Itay's Singles</p>
+          <p className="text-slate-500 mt-1 text-sm">Rotem&apos;s &amp; Itay&apos;s Singles</p>
         </div>
 
         <div className="w-full max-w-sm">
