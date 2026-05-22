@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Button from '@/components/ui/Button'
+import { createClient } from '@/lib/supabase/client'
 
 interface Props {
   defaultValue: string
@@ -14,10 +15,24 @@ const VALID_IG = /^[a-zA-Z0-9._]{1,30}$/
 export default function InstagramStep({ defaultValue, onContinue, onSkip }: Props) {
   const [handle, setHandle] = useState(defaultValue)
   const [error, setError] = useState<string | null>(null)
+  const [isChecking, setIsChecking] = useState(false)
 
   function handleChange(val: string) {
     setHandle(val.trim().replace(/^@/, ''))
     setError(null)
+  }
+
+  async function handleBlur() {
+    if (!handle || !VALID_IG.test(handle)) return
+    setIsChecking(true)
+    const supabase = createClient()
+    const { data } = await supabase
+      .from('users')
+      .select('id')
+      .eq('instagram', handle.toLowerCase())
+      .maybeSingle()
+    if (data) setError('This Instagram handle is already registered.')
+    setIsChecking(false)
   }
 
   function handleContinue() {
@@ -25,6 +40,7 @@ export default function InstagramStep({ defaultValue, onContinue, onSkip }: Prop
       setError('Only letters, numbers, . and _ allowed (max 30 chars)')
       return
     }
+    if (error) return
     onContinue(handle)
   }
 
@@ -43,14 +59,15 @@ export default function InstagramStep({ defaultValue, onContinue, onSkip }: Prop
             inputMode="url"
             value={handle}
             onChange={e => handleChange(e.target.value)}
+            onBlur={handleBlur}
             placeholder="yourhandle"
             className="flex-1 outline-none bg-transparent text-xl font-body text-slate-800 py-2 placeholder:text-slate-300"
           />
         </div>
         {error && <p className="text-red-400 text-sm">{error}</p>}
       </div>
-      <Button onClick={handleContinue} className="w-full">
-        Continue →
+      <Button onClick={handleContinue} disabled={isChecking || !!error} className="w-full">
+        {isChecking ? 'Checking…' : 'Continue →'}
       </Button>
       <button
         type="button"
