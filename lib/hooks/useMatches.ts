@@ -15,8 +15,9 @@ export function useMatches(currentUserId: string | undefined) {
       return
     }
 
+    const supabase = createClient()
+
     async function load() {
-      const supabase = createClient()
       const { data, error: rpcError } = await supabase
         .rpc('get_my_matches', { p_user_id: currentUserId })
 
@@ -29,6 +30,14 @@ export function useMatches(currentUserId: string | undefined) {
     }
 
     load()
+
+    const channel = supabase
+      .channel(`matches-refresh-${currentUserId}`)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'matches', filter: `user1_id=eq.${currentUserId}` }, load)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'matches', filter: `user2_id=eq.${currentUserId}` }, load)
+      .subscribe()
+
+    return () => { supabase.removeChannel(channel) }
   }, [currentUserId])
 
   return { matches, loading, error }
