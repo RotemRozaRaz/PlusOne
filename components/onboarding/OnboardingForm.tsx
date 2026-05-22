@@ -23,6 +23,7 @@ export default function OnboardingForm() {
   const [step, setStep] = useState<Step>('name')
   const [name, setName] = useState('')
   const [instagram, setInstagram] = useState('')
+  const [phone, setPhone] = useState('')
   const [photoFile, setPhotoFile] = useState<File | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -51,6 +52,20 @@ export default function OnboardingForm() {
         }
       }
 
+      if (phone.trim()) {
+        const { data: existing } = await supabase
+          .from('users')
+          .select('id')
+          .eq('phone', phone.trim())
+          .maybeSingle()
+
+        if (existing) {
+          setError('This phone number is already registered.')
+          setIsSubmitting(false)
+          return
+        }
+      }
+
       const compressed = await compressPhoto(photoFile)
       const fileName = `${userId}.jpg`
 
@@ -69,6 +84,7 @@ export default function OnboardingForm() {
         device_id: deviceId,
         name: name.trim(),
         instagram: instagram.trim().toLowerCase() || null,
+        phone: phone.trim() || null,
         photo_url: publicUrl,
       })
 
@@ -119,9 +135,10 @@ export default function OnboardingForm() {
                     transition={{ duration: 0.22 }}
                   >
                     <InstagramStep
-                      defaultValue={instagram}
-                      onContinue={h => { setInstagram(h); setStep('photo') }}
-                      onSkip={() => { setInstagram(''); setStep('photo') }}
+                      defaultInstagram={instagram}
+                      defaultPhone={phone}
+                      onContinue={h => { setInstagram(h); setPhone(''); setStep('photo') }}
+                      onContinuePhone={p => { setPhone(p); setInstagram(''); setStep('photo') }}
                     />
                   </motion.div>
                 )}

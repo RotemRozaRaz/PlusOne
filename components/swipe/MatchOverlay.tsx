@@ -99,7 +99,7 @@ export default function MatchOverlay({ currentUser, matchedUser, onDismiss }: Pr
         className="flex flex-col gap-3 w-full max-w-xs"
         onClick={e => e.stopPropagation()}
       >
-        {matchedUser.instagram && (
+        {matchedUser.instagram ? (
           <a
             href={`https://instagram.com/${matchedUser.instagram}`}
             target="_blank"
@@ -108,7 +108,11 @@ export default function MatchOverlay({ currentUser, matchedUser, onDismiss }: Pr
           >
             Open Instagram ↗
           </a>
-        )}
+        ) : matchedUser.phone ? (
+          <div className="bg-gold/10 border border-gold/30 text-slate-700 text-center py-3.5 px-6 rounded-full font-body">
+            📞 {matchedUser.phone}
+          </div>
+        ) : null}
         <button
           onClick={onDismiss}
           className="bg-white/70 border border-blush text-slate-700 py-3.5 px-6 rounded-full font-body"

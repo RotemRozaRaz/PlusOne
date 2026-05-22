@@ -3,6 +3,7 @@ export interface User {
   device_id: string
   name: string
   instagram: string | null
+  phone: string | null
   photo_url: string
   created_at: string
   is_active: boolean

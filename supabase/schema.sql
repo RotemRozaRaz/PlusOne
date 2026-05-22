@@ -8,6 +8,7 @@ CREATE TABLE users (
   device_id     TEXT NOT NULL UNIQUE,
   name          TEXT NOT NULL,
   instagram     TEXT UNIQUE,
+  phone         TEXT UNIQUE,
   photo_url     TEXT NOT NULL,
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
   is_active     BOOLEAN NOT NULL DEFAULT true

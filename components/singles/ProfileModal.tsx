@@ -86,7 +86,7 @@ export default function ProfileModal({ profile, onClose }: Props) {
         <div className="p-6">
           <h2 className="font-display text-4xl text-slate-800">{profile.name}</h2>
 
-          {profile.instagram && (
+          {profile.instagram ? (
             <a
               href={`https://instagram.com/${profile.instagram}`}
               target="_blank"
@@ -95,7 +95,9 @@ export default function ProfileModal({ profile, onClose }: Props) {
             >
               @{profile.instagram} ↗
             </a>
-          )}
+          ) : profile.phone ? (
+            <span className="text-slate-500 text-sm font-body mt-1 block">{profile.phone}</span>
+          ) : null}
 
           <div className="mt-5 flex gap-3">
             <button

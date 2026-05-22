@@ -58,7 +58,7 @@ export default function MatchesPage() {
                   <p className="font-body font-semibold text-slate-800 truncate">
                     {match.name}
                   </p>
-                  {match.instagram && (
+                  {match.instagram ? (
                     <a
                       href={`https://instagram.com/${match.instagram}`}
                       target="_blank"
@@ -67,7 +67,9 @@ export default function MatchesPage() {
                     >
                       @{match.instagram} ↗
                     </a>
-                  )}
+                  ) : match.phone ? (
+                    <span className="text-slate-500 text-sm">{match.phone}</span>
+                  ) : null}
                 </div>
                 <span className="text-2xl">💍</span>
               </li>
