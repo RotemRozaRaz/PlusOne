@@ -8,7 +8,7 @@ import type { User } from '@/types'
 
 interface Props {
   profiles: User[]
-  onSwipeEnd: (direction: 'left' | 'right', profileId: string) => void
+  onSwipeEnd: (direction: 'left' | 'right', profileId: string) => void | Promise<void>
 }
 
 export default function CardStack({ profiles, onSwipeEnd }: Props) {

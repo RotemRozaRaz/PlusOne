@@ -34,13 +34,15 @@ export default function SwipePage() {
     if (!loading && !profile) router.replace('/onboard')
   }, [profile, loading, router])
 
-  function handleSwipeEnd(direction: 'left' | 'right', profileId: string) {
+  async function handleSwipeEnd(direction: 'left' | 'right', profileId: string) {
     markSeen(profileId)
     const supabase = createClient()
     if (direction === 'right' && profile) {
-      supabase.rpc('try_create_match', { p_liker: profile.id, p_liked: profileId })
+      const { error } = await supabase.rpc('try_create_match', { p_liker: profile.id, p_liked: profileId })
+      if (error) console.error('like failed:', error)
     } else if (direction === 'left' && profile) {
-      supabase.from('dismissed').insert({ dismisser_id: profile.id, dismissed_id: profileId })
+      const { error } = await supabase.from('dismissed').insert({ dismisser_id: profile.id, dismissed_id: profileId })
+      if (error) console.error('dismissed insert failed:', error)
     }
   }
 
