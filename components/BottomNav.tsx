@@ -3,12 +3,13 @@
 import Link from 'next/link'
 import { cn } from '@/lib/cn'
 
-type Tab = 'swipe' | 'singles' | 'matches'
+type Tab = 'swipe' | 'singles' | 'matches' | 'profile'
 
 const tabs: { id: Tab; label: string; icon: string; href: string }[] = [
   { id: 'swipe',   label: 'Swipe',   icon: '🔥', href: '/swipe'   },
   { id: 'singles', label: 'Singles', icon: '👥', href: '/singles' },
   { id: 'matches', label: 'Matches', icon: '💌', href: '/matches' },
+  { id: 'profile', label: 'Profile', icon: '👤', href: '/profile' },
 ]
 
 export default function BottomNav({ active }: { active: Tab }) {
