@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useRef } from 'react'
 import Link from 'next/link'
 import SwipeCard, { type SwipeCardRef } from './SwipeCard'
 import SwipeButtons from './SwipeButtons'
@@ -12,19 +12,13 @@ interface Props {
 }
 
 export default function CardStack({ profiles, onSwipeEnd }: Props) {
-  const [queue, setQueue] = useState<User[]>(profiles)
   const topCardRef = useRef<SwipeCardRef>(null)
 
-  useEffect(() => {
-    setQueue(profiles)
-  }, [profiles])
-
   function handleSwipe(direction: 'left' | 'right', profileId: string) {
-    setQueue(prev => prev.filter(p => p.id !== profileId))
     onSwipeEnd(direction, profileId)
   }
 
-  const visible = queue.slice(0, 3)
+  const visible = profiles.slice(0, 3)
 
   if (visible.length === 0) {
     return (
